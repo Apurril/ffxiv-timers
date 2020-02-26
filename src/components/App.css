@@ -1,0 +1,29 @@
+ .idk {
+  border: solid;
+  border-color: black;
+  /* display: inline-flex; */
+  justify-content: center;
+}
+
+.card-container {
+  max-width: 800px;
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  /* align-items: flex-start; */
+
+  border: solid;
+  border-color: rgb(190, 177, 116);
+
+}
+
+.card {
+  border: solid;
+  border-color: rgb(101, 177, 111);
+  border-radius: 5px;
+  width: 200px;
+  min-width: 200px;
+  height: 200px;
+  padding: 5px;
+  margin: 5px;
+}

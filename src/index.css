@@ -1,0 +1,9 @@
+html, body {
+  box-sizing: border-box;
+  background-color: rgb(97, 82, 92);
+  color: rgba(201, 201, 201, 0.8);
+}
+* {
+  margin: 0;
+  padding: 0;
+}
