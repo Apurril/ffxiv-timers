@@ -138,8 +138,12 @@ const App = () => (
     <div className="card-container">
       <Card />
       <Card />
+      <Card2 />
+      <Card2 />
+      <Card2 />
+      <Card2 />
       <Card />
-      <Card />
+      <Card2 />
       <Card />
       <Card />
       <Card />
@@ -152,10 +156,13 @@ const Card = () => (
   <div className="card">
 
     <div className="title-container">
-      <div className="teleport">Lydha Lran</div>
+      <div className="teleport">The Inn at Journey's Head</div>
+      <div className="timer">7:00</div>
     </div>
 
     <div className="resource-container">
+      <img src={MIN} className="skill-icon" />
+
       <div className="resource">
         <img src={beryl} className="icon" />
         {/* <img src={WHITE} className="scrip-icon" /> */}
@@ -171,11 +178,43 @@ const Card = () => (
 
 
     <div className="info-container">
-      <div className="teleport">Lydha Lran</div>
+      {/* <div className="teleport">Lydha Lran</div> */}
+      {/* <img src={MIN} className="image" /> */}
       <div className="zone">Il Mheg - (31, 20)</div>
       {/* <div className="pos"></div> */}
-      <div className="time">7:00</div>
-      <img src={MIN} className="image" />
+      <div className="time">4:00 & 16:00</div>
+    </div>
+
+  </div>
+);
+
+const Card2 = () => (
+  <div className="card">
+
+    <div className="title-container">
+      <div className="teleport">The Inn at Journey's Head</div>
+      <div className="timer">7:00</div>
+    </div>
+
+    <div className="resource-container">
+      <img src={MIN} className="skill-icon" />
+
+      <div className="resource">
+        <img src={beryl} className="icon" />
+        {/* <img src={WHITE} className="scrip-icon" /> */}
+        <div className="name">Beryllium Ore</div>
+        <img src={WHITE} className="scrip-icon" />
+
+      </div>
+    </div>
+
+
+    <div className="info-container">
+      {/* <div className="teleport">Lydha Lran</div> */}
+      {/* <img src={MIN} className="image" /> */}
+      <div className="zone">Il Mheg - (31, 20)</div>
+      {/* <div className="pos"></div> */}
+      <div className="time">4:00 & 16:00</div>
     </div>
 
   </div>
