@@ -1,6 +1,12 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-unused-vars */
 import React from "react";
 import "./App.css";
+import MIN from "../assets/MIN.png";
+import WHITE from "../assets/White.png";
+import YELLOW from "../assets/Yellow.png";
+import prism from "../assets/21232.png";
+import beryl from "../assets/21455.png";
 
 const resources = [
   {
@@ -144,14 +150,33 @@ const App = () => (
 
 const Card = () => (
   <div className="card">
-    <div className="resource-name">Beryllium Ore</div>
-    <div>Prismstone</div>
-    <div>Il Mheg</div>
-    <div>Lydha Lran</div>
-    <div>minericon</div>
-    <div>X: 31 - Y: 20</div>
-    <div>7:00</div>
-    <div>scrip type img</div>
+
+    <div className="title-container">
+      <div className="teleport">Lydha Lran</div>
+    </div>
+
+    <div className="resource-container">
+      <div className="resource">
+        <img src={beryl} className="icon" />
+        {/* <img src={WHITE} className="scrip-icon" /> */}
+        <div className="name">Beryllium Ore</div>
+      </div>
+
+      <div className="resource">
+        <img src={prism} className="icon" />
+        <div className="name">Prismstone</div>
+        <img src={WHITE} className="scrip-icon" />
+      </div>
+    </div>
+
+
+    <div className="info-container">
+      <div className="teleport">Lydha Lran</div>
+      <div className="zone">Il Mheg - (31, 20)</div>
+      {/* <div className="pos"></div> */}
+      <div className="time">7:00</div>
+      <img src={MIN} className="image" />
+    </div>
 
   </div>
 );
