@@ -1,10 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-unused-vars */
+
 import React from "react";
 import "./App.css";
-import MIN from "../assets/MIN.png";
-import WHITE from "../assets/White.png";
-import YELLOW from "../assets/Yellow.png";
+import MIN from "../assets/min.png";
+import WHITE from "../assets/white.png";
+import YELLOW from "../assets/yellow.png";
 import prism from "../assets/21232.png";
 import beryl from "../assets/21455.png";
 
