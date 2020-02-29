@@ -1,14 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-console */
+/* eslint-disable no-return-assign */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-unused-vars */
 
 import React from "react";
 import "./App.css";
-import MIN from "../assets/min.png";
-import WHITE from "../assets/white.png";
-import YELLOW from "../assets/yellow.png";
-import prism from "../assets/21232.png";
-import beryl from "../assets/21455.png";
 
 const resources = [
   {
@@ -135,92 +134,132 @@ const resources = [
   },
 ];
 
+const cache = {};
+
+const importAll = (r) => {
+  r.keys().forEach((key) => cache[key] = r(key));
+};
+
+importAll(require.context("../assets/", false, /\.png$/));
+
+const asset = (s) => cache[`./${s}.png`].default;
+
+const formatTimes = (times) => times.reduce((prev, curr) => `${prev} & ${curr}`);
+
+
 const App = () => (
   <div className="idk">
-    <div className="card-container">
-      <Card />
-      <Card />
-      <Card2 />
-      <Card2 />
-      <Card2 />
-      <Card2 />
-      <Card />
-      <Card2 />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-    </div>
+    <RenderCards />
   </div>
 );
 
-const Card = () => (
-  <div className="card">
+const cardData = [
+  {
+    loot: [
+      {
+        name: "Beryllium Ore",
+        id: "21455",
+        // suffix: "yellow",
+      },
+      {
+        name: "Prismstone",
+        id: "21232",
+        suffix: "white",
+      },
+    ],
+    job: "min",
+    zone: "Il Mheg",
+    teleport: "Lydha Lran",
+    pos: [30, 21],
+    times: ["4:00", "16:00"],
+  },
+  {
+    loot: [
+      {
+        name: "Shade Quartz",
+        id: "21462",
+        suffix: "reduce",
+      },
+      {
+        name: "Fire Cluster",
+        id: "20013",
+      },
+    ],
+    job: "min",
+    zone: "Kholusia",
+    teleport: "Tomra",
+    pos: [22, 18],
+    times: ["16:00"],
+  },
+];
 
-    <div className="title-container">
-      <div className="teleport">The Inn at Journey's Head</div>
-      <div className="timer">7:00</div>
+const Resource = ({ name, id, suffix }) => {
+  console.log(name);
+  return (
+    <div className="resource">
+      <img key={`icon-${id}`} src={asset(id)} className="icon" />
+      <div key={`name-${id}`} className="name">{name}</div>
+      {suffix ? <img key={`suffix-${id}`} src={asset(suffix)} className="suffix-icon" /> : null}
     </div>
+  );
+};
 
-    <div className="resource-container">
-      <img src={MIN} className="skill-icon" />
-
-      <div className="resource">
-        <img src={beryl} className="icon" />
-        {/* <img src={WHITE} className="scrip-icon" /> */}
-        <div className="name">Beryllium Ore</div>
-      </div>
-
-      <div className="resource">
-        <img src={prism} className="icon" />
-        <div className="name">Prismstone</div>
-        <img src={WHITE} className="scrip-icon" />
-      </div>
-    </div>
-
-
-    <div className="info-container">
-      {/* <div className="teleport">Lydha Lran</div> */}
-      {/* <img src={MIN} className="image" /> */}
-      <div className="zone">Il Mheg - (31, 20)</div>
-      {/* <div className="pos"></div> */}
-      <div className="time">4:00 & 16:00</div>
-    </div>
-
+const RenderCards = () => (
+  <div className="card-container">
+    {cardData.map((card) => (<Card {...card} />))}
   </div>
 );
 
-const Card2 = () => (
-  <div className="card">
+const Card = (props) => {
+  const {
+    loot, job, zone, teleport, pos, times,
+  } = props;
 
-    <div className="title-container">
-      <div className="teleport">The Inn at Journey's Head</div>
-      <div className="timer">7:00</div>
-    </div>
+  const [x, y] = pos;
 
-    <div className="resource-container">
-      <img src={MIN} className="skill-icon" />
+  // const Huh = loot.map((e) => {
+  //   console.log(e.id);
+  //   console.log(e.name);
+  //   return <Resource id={e.id} mame={e.name} />;
+  // });
+  // The Inn at Journey's Head
 
-      <div className="resource">
-        <img src={beryl} className="icon" />
-        {/* <img src={WHITE} className="scrip-icon" /> */}
-        <div className="name">Beryllium Ore</div>
-        <img src={WHITE} className="scrip-icon" />
+  return (
+    <div className="card">
 
+      <div className="title-container">
+        <div className="teleport">{teleport}</div>
+        <div className="timer">7:00</div>
       </div>
+
+      <div className="resource-container">
+        <img src={asset(job)} className="skill-icon" />
+        <Resource {...loot[0]} />
+        <Resource {...loot[1]} />
+
+        {/* <div className="resource">
+          <img src={asset("21455")} className="icon" />
+          <div className="name">Beryllium Ore</div>
+        </div> */}
+
+        {/* <div className="resource">
+          <img src={asset("21232")} className="icon" />
+          <div className="name">Prismstone</div>
+          <img src={asset("white")} className="scrip-icon" />
+        </div> */}
+      </div>
+
+
+      <div className="info-container">
+        {/* <div className="teleport">Lydha Lran</div> */}
+        {/* <img src={MIN} className="image" /> */}
+        <div className="zone">{`${zone} - (${x}, ${y})`}</div>
+        {/* <div className="pos"></div> */}
+        <div className="time">{formatTimes(times)}</div>
+      </div>
+
     </div>
-
-
-    <div className="info-container">
-      {/* <div className="teleport">Lydha Lran</div> */}
-      {/* <img src={MIN} className="image" /> */}
-      <div className="zone">Il Mheg - (31, 20)</div>
-      {/* <div className="pos"></div> */}
-      <div className="time">4:00 & 16:00</div>
-    </div>
-
-  </div>
-);
-
+  );
+};
 
 export default App;
