@@ -1,13 +1,241 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
-/* eslint-disable no-return-assign */
-/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-return-assign */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 
 import React from "react";
 import "./App.css";
+
+const imageCache = {};
+
+const importAll = (r) => {
+  r.keys().forEach((key) => imageCache[key] = r(key));
+};
+
+importAll(require.context("../assets/", false, /\.png$/));
+
+const asset = (s) => imageCache[`./${s}.png`].default;
+
+const formatTimes = (times) => times.reduce((prev, curr) => `${prev} & ${curr}`);
+
+const lang = "en";
+const getTranslation = (object) => object[lang] || object.en;
+
+const jobs = {
+  botany: "btn",
+  mining: "min",
+  fishing: "fsh",
+};
+
+const scrips = {
+  yellow: "yellow",
+  white: "white",
+};
+
+const teleports = {
+  lydhaLran: {
+    en: "Lydha Lran",
+    jp: "リダ・ラーン",
+  },
+  tomra: {
+    en: "Tomra",
+    jp: "トメラの村",
+  },
+  theOndoCups: {
+    en: "The Ondo Cups",
+    jp: "オンドの潮溜まり",
+  },
+  theInnatJourneysHead: {
+    en: "The Inn at Journey's Head",
+    jp: "旅立ちの宿",
+  },
+};
+
+const zones = {
+  ilMheg: "Il Mheg",
+  kholusia: "Kholusia",
+  theTempest: "The Tempest",
+  amhAraeng: "Amh Araeng",
+};
+
+const sands = {
+  agedeep: {
+    suffix: "21234",
+    suffixName: "Agedeep Aethersand",
+  },
+};
+
+const cardData = [
+  {
+    node: [
+      {
+        name: "Beryllium Ore",
+        id: "21455",
+      },
+      {
+        name: "Prismstone",
+        id: "21232",
+        suffix: scrips.white,
+      },
+    ],
+    job: jobs.mining,
+    zone: zones.ilMheg,
+    teleport: teleports.lydhaLran,
+    pos: [30, 21],
+    times: ["4:00", "16:00"],
+  },
+  {
+    node: [
+      {
+        name: "Beryllium Ore",
+        id: "21455",
+      },
+    ],
+    job: jobs.mining,
+    zone: zones.ilMheg,
+    teleport: teleports.lydhaLran,
+    pos: [30, 21],
+    times: ["4:00", "16:00"],
+  },
+  {
+    node: [
+      {
+        name: "Prismstone",
+        id: "21232",
+        suffix: scrips.white,
+      },
+    ],
+    job: jobs.mining,
+    zone: zones.ilMheg,
+    teleport: teleports.lydhaLran,
+    pos: [30, 21],
+    times: ["4:00", "16:00"],
+  },
+  {
+    node: [
+      {
+        name: "Shade Quartz",
+        id: "21462",
+        ...sands.agedeep,
+      },
+      {
+        name: "Shade Quartz",
+        id: "21462",
+        suffix: "21234",
+        suffixName: "Agedeep Aethersand",
+      },
+      // {
+      //   name: "Fire Cluster",
+      //   id: "20013",
+      // },
+    ],
+    job: jobs.mining,
+    zone: zones.kholusia,
+    teleport: teleports.tomra,
+    pos: [22, 18],
+    times: ["16:00"],
+  },
+  {
+    node: [
+      {
+        name: "Raw Onyx",
+        id: "21231",
+        suffix: scrips.white,
+      },
+    ],
+    job: jobs.mining,
+    zone: zones.theTempest,
+    teleport: teleports.theOndoCups,
+    pos: [15, 21],
+    times: ["12:00", "00:00"],
+  },
+  {
+    node: [
+      {
+        name: "Broad Beans",
+        id: "25353",
+        suffix: scrips.yellow,
+      },
+    ],
+    job: jobs.botany,
+    zone: zones.ilMheg,
+    teleport: teleports.lydhaLran,
+    pos: [25, 36],
+    times: ["12:00", "00:00"],
+  },
+  {
+    node: [
+      {
+        name: "Duskblooms",
+        id: "25022",
+      },
+    ],
+    job: jobs.botany,
+    zone: zones.amhAraeng,
+    teleport: teleports.theInnatJourneysHead,
+    pos: [32, 33],
+    times: ["4:00", "16:00"],
+  },
+];
+
+const App = () => (
+  <div className="idk">
+    <RenderCards />
+  </div>
+);
+
+// eslint-disable-next-line object-curly-newline
+const Resource = ({ name, id, suffix, suffixName }) => (
+  <div className="resource">
+    <img key={`icon-${id}`} src={asset(id)} className="icon" alt={name} />
+    <div key={`name-${id}`} className="name">{name}</div>
+    {suffix ? <img key={`suffix-${id}`} src={asset(suffix)} className="suffix-icon" title={suffixName || ""} /> : null}
+  </div>
+);
+
+const RenderResources = ({ node, job }) => (
+  <div className="resource-container">
+    <img src={asset(job)} className="skill-icon" />
+    {node.map((item, index) => (<Resource key={`res-${item.id}-${index}`} name={item.name} id={item.id} suffix={item.suffix} suffixName={item.suffixName} />))}
+  </div>
+);
+
+const RenderCards = () => (
+  <div className="card-container">
+    {cardData.map((card, index) => (<Card key={`card-${index}`} data={card} />))}
+  </div>
+);
+
+const Card = ({ data }) => {
+  const {
+    node, job, zone, teleport, pos, times,
+  } = data;
+
+  const [x, y] = pos;
+
+  return (
+    <div className="card">
+
+      <div className="title-container">
+        <div className="teleport">{getTranslation(teleport)}</div>
+        <div className="timer">7:00</div>
+      </div>
+
+      <RenderResources node={node} job={job} />
+
+      <div className="info-container">
+        <div className="zone">{`${zone} - (${x}, ${y})`}</div>
+        <div className="time">{formatTimes(times)}</div>
+      </div>
+
+    </div>
+  );
+};
+
+export default App;
+
 
 const resources = [
   {
@@ -133,119 +361,3 @@ const resources = [
     times: [0, 12],
   },
 ];
-
-const cache = {};
-
-const importAll = (r) => {
-  r.keys().forEach((key) => cache[key] = r(key));
-};
-
-importAll(require.context("../assets/", false, /\.png$/));
-
-const asset = (s) => cache[`./${s}.png`].default;
-
-const formatTimes = (times) => times.reduce((prev, curr) => `${prev} & ${curr}`);
-
-
-const App = () => (
-  <div className="idk">
-    <RenderCards />
-  </div>
-);
-
-const cardData = [
-  {
-    loot: [
-      {
-        name: "Beryllium Ore",
-        id: "21455",
-        // suffix: "yellow",
-      },
-      {
-        name: "Prismstone",
-        id: "21232",
-        suffix: "white",
-      },
-    ],
-    job: "min",
-    zone: "Il Mheg",
-    teleport: "Lydha Lran",
-    pos: [30, 21],
-    times: ["4:00", "16:00"],
-  },
-  {
-    loot: [
-      {
-        name: "Shade Quartz",
-        id: "21462",
-        suffix: "reduce",
-      },
-      {
-        name: "Fire Cluster",
-        id: "20013",
-      },
-    ],
-    job: "min",
-    zone: "Kholusia",
-    teleport: "Tomra",
-    pos: [22, 18],
-    times: ["16:00"],
-  },
-];
-
-const Resource = ({ name, id, suffix }) => {
-  console.log(name);
-  return (
-    <div className="resource">
-      <img key={`icon-${id}`} src={asset(id)} className="icon" />
-      <div key={`name-${id}`} className="name">{name}</div>
-      {suffix ? <img key={`suffix-${id}`} src={asset(suffix)} className="suffix-icon" /> : null}
-    </div>
-  );
-};
-
-const RenderCards = () => (
-  <div className="card-container">
-    {cardData.map((card) => (<Card {...card} />))}
-  </div>
-);
-
-const RenderResources = () => {
-  // TODO
-};
-
-const Card = (props) => {
-  const {
-    loot, job, zone, teleport, pos, times,
-  } = props;
-
-  const [x, y] = pos;
-
-  return (
-    <div className="card">
-
-      <div className="title-container">
-        <div className="teleport">{teleport}</div>
-        <div className="timer">7:00</div>
-      </div>
-
-      <div className="resource-container">
-        <img src={asset(job)} className="skill-icon" />
-        <Resource {...loot[0]} />
-        <Resource {...loot[1]} />
-      </div>
-
-
-      <div className="info-container">
-        {/* <div className="teleport">Lydha Lran</div> */}
-        {/* <img src={MIN} className="image" /> */}
-        <div className="zone">{`${zone} - (${x}, ${y})`}</div>
-        {/* <div className="pos"></div> */}
-        <div className="time">{formatTimes(times)}</div>
-      </div>
-
-    </div>
-  );
-};
-
-export default App;
