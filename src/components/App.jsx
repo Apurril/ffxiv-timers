@@ -210,19 +210,16 @@ const RenderCards = () => (
   </div>
 );
 
+const RenderResources = () => {
+  // TODO
+};
+
 const Card = (props) => {
   const {
     loot, job, zone, teleport, pos, times,
   } = props;
 
   const [x, y] = pos;
-
-  // const Huh = loot.map((e) => {
-  //   console.log(e.id);
-  //   console.log(e.name);
-  //   return <Resource id={e.id} mame={e.name} />;
-  // });
-  // The Inn at Journey's Head
 
   return (
     <div className="card">
@@ -236,17 +233,6 @@ const Card = (props) => {
         <img src={asset(job)} className="skill-icon" />
         <Resource {...loot[0]} />
         <Resource {...loot[1]} />
-
-        {/* <div className="resource">
-          <img src={asset("21455")} className="icon" />
-          <div className="name">Beryllium Ore</div>
-        </div> */}
-
-        {/* <div className="resource">
-          <img src={asset("21232")} className="icon" />
-          <div className="name">Prismstone</div>
-          <img src={asset("white")} className="scrip-icon" />
-        </div> */}
       </div>
 
 
