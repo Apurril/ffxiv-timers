@@ -1,7 +1,14 @@
 html, body {
   box-sizing: border-box;
   background-color: rgb(29, 29, 29);
-  color: rgba(201, 201, 201, 0.8);
+  color: rgb(184, 184, 184);
+  font-family: "Consolas";
+  font-size: 14px;
+    /* height: 100%; */
+  /* border: solid green 1px; */
+  /* display: flex;
+  flex-direction: row;
+  height: 100%; */
 }
 * {
   margin: 0;

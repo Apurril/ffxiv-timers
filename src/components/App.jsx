@@ -5,7 +5,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import nodes from "../constants/data";
 
@@ -25,10 +25,53 @@ const lang = "en";
 const getTranslation = (object) => object[lang] || object.en;
 
 const App = () => (
-  <div className="idk">
-    <Cards />
+  <div className="app">
+    <div className="sidebar">
+      <Clock />
+    </div>
+    <div>
+      <Cards />
+    </div>
   </div>
 );
+
+const formatTime = (date) => {
+  const secs = date.getSeconds().toString().padStart(2, "0");
+  const mins = date.getMinutes().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  return `${hours}:${mins}`;
+};
+
+const eorzeaTimeFactor = 20.571428571428573; // 60 * 24 / 70
+
+const localToEorzea = (date) => new Date(date.getTime() * eorzeaTimeFactor);
+const eorzeaToLocal = (date) => new Date(date.getTime() / eorzeaTimeFactor);
+
+const Clock = () => {
+  const [time, setTime] = useState(new Date());
+  const [et, setET] = useState(localToEorzea(new Date()));
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTime(new Date());
+      setET(localToEorzea(new Date()));
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  });
+
+  return (
+    <div className="clock">
+      <div className="display">
+        {/* <div>{`LT - ${formatTime(time)}`}</div> */}
+        <div className="et-clock">{`${formatTime(et)}`}</div>
+      </div>
+    </div>
+  );
+};
 
 // eslint-disable-next-line object-curly-newline
 const Resource = ({ name, icon, suffix, suffixName }) => (
