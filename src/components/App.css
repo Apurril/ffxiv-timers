@@ -7,6 +7,7 @@
 }
 
 .sidebar {
+  box-sizing: border-box;
   border: solid rgb(145, 33, 51) 1px;
   background-color: rgb(39, 39, 39);
   display: flex;
@@ -16,15 +17,17 @@
 
 .clock {
   margin: 5px;
+  padding: 0 5px;
   background-color: rgb(48, 48, 48);
   border-radius: 5px;
   font-size: 1.3em;
-  text-align: center;
-  /* width: 100px; */
+  display: flex;
+  align-self: center;
 }
 
 .card-container {
-  margin: 10px;
+  box-sizing: border-box;
+  margin: 5px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -32,15 +35,17 @@
 }
 
 .card {
-  border: solid rgb(101, 177, 111) 1px;
-  border-radius: 5px;
+  /* border: solid rgb(101, 177, 111) 1px; */
+  /* border-radius: 5px; */
   width: 250px;
   min-width: 200px;
   margin: 3px;
-  background-color: rgb(19, 19, 19);
+  /* background-color: rgb(105, 105, 105);
+  padding: 1px; */
   box-sizing: border-box;
-  /* display: flex;
-  flex-direction: column; */
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
 }
 
 .title-container {
