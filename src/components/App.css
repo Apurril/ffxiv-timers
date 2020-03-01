@@ -1,33 +1,27 @@
 .app {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  box-sizing: border-box;
   border: solid pink 1px;
-}
-
-.idk {
-  /* display: flex; */
-  /* border: solid rgb(255, 255, 255) 1px; */
-  /* display: inline-flex; */
-  /* justify-content: center; */
-  /* font-family: "Courier Prime"; */
-  /* font-family: "Roboto Mono"; */
-  /* font-family: "Consolas";
-  font-size: 14px; */
+  min-height: 100vh;
 }
 
 .sidebar {
+  border: solid rgb(145, 33, 51) 1px;
   background-color: rgb(39, 39, 39);
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
 }
 
 .clock {
-  margin: 10px;
+  margin: 5px;
   background-color: rgb(48, 48, 48);
+  border-radius: 5px;
   font-size: 1.3em;
   text-align: center;
-  width: 100px;
-} 
+  /* width: 100px; */
+}
 
 .card-container {
   margin: 10px;
