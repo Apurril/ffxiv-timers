@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable max-len */
 /* eslint-disable no-console */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/alt-text */
@@ -24,17 +26,6 @@ const formatTimes = (times) => times.map((value) => `${value}:00`).join(" & ");
 const lang = "en";
 const getTranslation = (object) => object[lang] || object.en;
 
-const App = () => (
-  <div className="app">
-    <div className="sidebar">
-      <Clock />
-    </div>
-    <div>
-      <Cards />
-    </div>
-  </div>
-);
-
 const formatTime = (date) => {
   const secs = date.getSeconds().toString().padStart(2, "0");
   const mins = date.getMinutes().toString().padStart(2, "0");
@@ -47,10 +38,50 @@ const eorzeaTimeFactor = 20.571428571428573; // 60 * 24 / 70
 const localToEorzea = (date) => new Date(date.getTime() * eorzeaTimeFactor);
 const eorzeaToLocal = (date) => new Date(date.getTime() / eorzeaTimeFactor);
 
+const nextSpawn = (spawnTimes, uptime) => {
+  const eorzeaTime = localToEorzea(new Date());
+  const currentTime = eorzeaTime.getHours();
+
+  let smallestTimeDiff = Infinity;
+  let nextTime;
+
+  for (const spawnTime of spawnTimes) {
+    if (currentTime === spawnTime) {
+      return spawnTime;
+    }
+    let timeDiff = Infinity;
+    if (currentTime < spawnTime) {
+      timeDiff = spawnTime - currentTime;
+    }
+
+    if (currentTime > spawnTime) {
+      timeDiff = 24 - currentTime + spawnTime;
+    }
+
+    if (timeDiff < smallestTimeDiff) {
+      smallestTimeDiff = timeDiff;
+      nextTime = spawnTime;
+    }
+  }
+  const startTime = 0;
+  // return nextTime;
+  return smallestTimeDiff;
+};
+
+const App = () => (
+  <div className="app">
+    <div className="sidebar">
+      <Clock />
+    </div>
+    <div>
+      <Cards />
+    </div>
+  </div>
+);
+
 const Clock = () => {
   const [time, setTime] = useState(new Date());
   const [et, setET] = useState(localToEorzea(new Date()));
-
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -89,25 +120,30 @@ const Resources = ({ node, job }) => (
   </div>
 );
 
+// a - b: ascending order, b - a: descending order
+const selectedNodes = nodes.map((node) => node).sort((a, b) => nextSpawn(a.times, a.uptime) - nextSpawn(b.times, b.uptime));
+console.log(selectedNodes);
+
 const Cards = () => (
   <div className="card-container">
-    {nodes.map((card, index) => (<Card key={`card-${index}`} data={card} />))}
+    {selectedNodes.map((node, index) => (<Card key={`card-${index}`} data={node} />))}
   </div>
 );
 
 const Card = ({ data }) => {
   const {
-    node, job, zone, teleport, pos, times,
+    node, job, zone, teleport, pos, times, uptime,
   } = data;
 
   const [x, y] = pos;
 
+  // console.log(`Next: ${nextSpawn(times, uptime)} - ${getTranslation(teleport)}`);
   return (
     <div className="card">
 
       <div className="title-container">
         <div className="teleport">{getTranslation(teleport)}</div>
-        <div className="timer">7:00</div>
+        <div className="timer">{nextSpawn(times, uptime)}</div>
       </div>
 
       <Resources node={node} job={job} />
