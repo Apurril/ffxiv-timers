@@ -19,7 +19,7 @@ importAll(require.context("../assets/", false, /\.png$/));
 
 const asset = (s) => imageCache[`./${s}.png`].default;
 
-const formatTimes = (times) => times.reduce((prev, curr) => `${prev} & ${curr}`);
+const formatTimes = (times) => times.map((value) => `${value}:00`).join(" & ");
 
 const lang = "en";
 const getTranslation = (object) => object[lang] || object.en;

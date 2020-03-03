@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const jobs = {
   botany: "btn",
   mining: "min",
@@ -26,6 +27,18 @@ const teleports = {
     en: "The Inn at Journey's Head",
     jp: "旅立ちの宿",
   },
+  slitherbough: {
+    en: "Slitherbough",
+  },
+  fortJobb: {
+    en: "Fort Jobb",
+  },
+  theMacarensesAngle: {
+    en: "The Macarenses Angle",
+  },
+  twine: {
+    en: "Twine",
+  },
 };
 
 const zones = {
@@ -33,6 +46,8 @@ const zones = {
   kholusia: "Kholusia",
   theTempest: "The Tempest",
   amhAraeng: "Amh Araeng",
+  theRaktikaGreatwood: "The Rak'tika Greatwood",
+  lakeland: "Landland",
 };
 
 const sands = {
@@ -66,43 +81,17 @@ const nodes = [
     type: nodeType.legendary,
     stars: 1,
     pos: [30, 21],
-    times: ["4:00", "16:00"],
+    times: [4, 16],
+    uptime: 120,
     patch: 5.0,
   },
   {
     node: [
-      {
-        name: "Beryllium Ore",
-        icon: "21455",
-      },
-    ],
-    job: jobs.mining,
-    zone: zones.ilMheg,
-    teleport: teleports.lydhaLran,
-    pos: [30, 21],
-    times: ["4:00", "16:00"],
-  },
-  {
-    node: [
-      {
-        name: "Prismstone",
-        icon: "21232",
-        suffix: scrips.white,
-      },
-    ],
-    job: jobs.mining,
-    zone: zones.ilMheg,
-    teleport: teleports.lydhaLran,
-    pos: [30, 21],
-    times: ["4:00", "16:00"],
-  },
-  {
-    node: [
-      {
-        name: "Shade Quartz",
-        icon: "21462",
-        ...sands.agedeep,
-      },
+      // {
+      //   name: "Shade Quartz",
+      //   icon: "21462",
+      //   ...sands.agedeep,
+      // },
       {
         name: "Shade Quartz",
         icon: "21462",
@@ -118,7 +107,9 @@ const nodes = [
     zone: zones.kholusia,
     teleport: teleports.tomra,
     pos: [22, 18],
-    times: ["16:00"],
+    times: [16],
+    uptime: 240,
+    patch: 5.0,
   },
   {
     node: [
@@ -132,7 +123,9 @@ const nodes = [
     zone: zones.theTempest,
     teleport: teleports.theOndoCups,
     pos: [15, 21],
-    times: ["12:00", "00:00"],
+    times: [12, 0],
+    uptime: 120,
+    patch: 5.0,
   },
   {
     node: [
@@ -146,7 +139,9 @@ const nodes = [
     zone: zones.ilMheg,
     teleport: teleports.lydhaLran,
     pos: [25, 36],
-    times: ["12:00", "00:00"],
+    times: [12, 0],
+    uptime: 120,
+    patch: 5.0,
   },
   {
     node: [
@@ -159,7 +154,75 @@ const nodes = [
     zone: zones.amhAraeng,
     teleport: teleports.theInnatJourneysHead,
     pos: [32, 33],
-    times: ["4:00", "16:00"],
+    times: [4, 16],
+    uptime: 120,
+    patch: 5.0,
+  },
+  {
+    node: [
+      {
+        name: "SandalWood Log",
+        icon: "22401",
+        suffix: scrips.white,
+      },
+      {
+        name: "SandalWood Sap",
+        icon: "22638",
+      },
+    ],
+    job: jobs.botany,
+    zone: zones.theRaktikaGreatwood,
+    teleport: teleports.slitherbough,
+    pos: [24, 36],
+    times: [2, 14],
+    uptime: 120,
+    patch: 5.0,
+  },
+  {
+    node: [
+      {
+        name: "Ethereal Cocoon",
+        icon: "21661",
+        suffix: scrips.white,
+      },
+    ],
+    job: jobs.botany,
+    zone: zones.lakeland,
+    teleport: teleports.fortJobb,
+    pos: [26, 11],
+    times: [8, 20],
+    uptime: 120,
+    patch: 5.0,
+  },
+  {
+    node: [
+      {
+        name: "Purpure Shell Chip",
+        icon: "21469",
+      },
+    ],
+    job: jobs.mining,
+    zone: zones.theTempest,
+    teleport: teleports.theMacarensesAngle,
+    pos: [34, 31],
+    times: [6, 18],
+    uptime: 120,
+    patch: 5.0,
+  },
+  {
+    node: [
+      {
+        name: "Ashen Alumen",
+        icon: "22604",
+      },
+    ],
+    job: jobs.mining,
+    zone: zones.amhAraeng,
+    teleport: teleports.twine,
+    pos: [20, 8],
+    times: [10, 22],
+    uptime: 120,
+    patch: 5.0,
   },
 ];
 
