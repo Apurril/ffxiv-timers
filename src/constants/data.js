@@ -64,6 +64,7 @@ const nodeType = {
 
 const nodes = [
   {
+    id: 0,
     node: [
       {
         name: "Beryllium Ore",
@@ -86,6 +87,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 1,
     node: [
       // {
       //   name: "Shade Quartz",
@@ -112,6 +114,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 2,
     node: [
       {
         name: "Raw Onyx",
@@ -128,6 +131,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 3,
     node: [
       {
         name: "Broad Beans",
@@ -144,6 +148,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 4,
     node: [
       {
         name: "Duskblooms",
@@ -159,6 +164,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 5,
     node: [
       {
         name: "SandalWood Log",
@@ -179,6 +185,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 6,
     node: [
       {
         name: "Ethereal Cocoon",
@@ -195,6 +202,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 7,
     node: [
       {
         name: "Purpure Shell Chip",
@@ -210,6 +218,7 @@ const nodes = [
     patch: 5.0,
   },
   {
+    id: 8,
     node: [
       {
         name: "Ashen Alumen",

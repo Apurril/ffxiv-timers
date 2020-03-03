@@ -64,8 +64,8 @@ const nextSpawn = (spawnTimes, uptime) => {
     }
   }
   const startTime = 0;
-  // return nextTime;
-  return smallestTimeDiff;
+  return nextTime;
+  // return smallestTimeDiff;
 };
 
 const App = () => (
@@ -124,18 +124,46 @@ const Resources = ({ node, job }) => (
 const selectedNodes = nodes.map((node) => node).sort((a, b) => nextSpawn(a.times, a.uptime) - nextSpawn(b.times, b.uptime));
 console.log(selectedNodes);
 
-const Cards = () => (
-  <div className="card-container">
-    {selectedNodes.map((node, index) => (<Card key={`card-${index}`} data={node} />))}
-  </div>
-);
+const Cards = () => {
+  const [time, setTime] = useState(new Date());
+  const [et, setET] = useState(localToEorzea(new Date()));
+  const [timesTillSpawn, setTimesTillSpawn] = useState([]);
 
-const Card = ({ data }) => {
+  const handleNextSpawn = (value, id) => {
+    setTimesTillSpawn(value); // should be setting an array?
+    // console.log(`id: ${id} - ${value} `);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTime(new Date());
+      setET(localToEorzea(new Date()));
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  });
+
+  return (
+    <div className="card-container">
+      {selectedNodes.map((node, index) => (<Card key={`card-${index}`} data={node} time={et.getTime()} onNextSpawnChange={handleNextSpawn} />))}
+    </div>
+  );
+};
+
+const Card = ({ data, time, onNextSpawnChange }) => {
   const {
-    node, job, zone, teleport, pos, times, uptime,
+    node, job, zone, teleport, pos, times, uptime, id,
   } = data;
 
   const [x, y] = pos;
+
+  useEffect(() => {
+    const handleSpawnChange = (value, cardID) => {
+      onNextSpawnChange(value, cardID);
+    };
+    handleSpawnChange(nextSpawn(times, uptime), id);
+  }, [id, onNextSpawnChange, times, uptime]);
 
   // console.log(`Next: ${nextSpawn(times, uptime)} - ${getTranslation(teleport)}`);
   return (
@@ -143,7 +171,7 @@ const Card = ({ data }) => {
 
       <div className="title-container">
         <div className="teleport">{getTranslation(teleport)}</div>
-        <div className="timer">{nextSpawn(times, uptime)}</div>
+        <div className="timer">{time}</div>
       </div>
 
       <Resources node={node} job={job} />
