@@ -47,7 +47,7 @@ const zones = {
   theTempest: "The Tempest",
   amhAraeng: "Amh Araeng",
   theRaktikaGreatwood: "The Rak'tika Greatwood",
-  lakeland: "Landland",
+  lakeland: "Lakeland",
 };
 
 const sands = {
