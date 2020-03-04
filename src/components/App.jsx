@@ -1,11 +1,10 @@
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable no-return-assign */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-return-assign */
 
 import React, { useState, useEffect } from "react";
 import "./App.css";
@@ -98,31 +97,37 @@ const Clock = () => {
   return (
     <div className="clock">
       <div className="display">
-        {/* <div>{`LT - ${formatTime(time)}`}</div> */}
+        <div>{`${formatTime(time)}`}</div>
         <div className="et-clock">{`${formatTime(et)}`}</div>
       </div>
     </div>
   );
 };
 
-// eslint-disable-next-line object-curly-newline
-const Resource = ({ name, icon, suffix, suffixName }) => (
+const Resource = ({
+  name, icon, suffix, suffixName,
+}) => (
   <div className="resource">
     <img key={`icon-${icon}`} src={asset(icon)} className="icon" alt={name} />
     <div key={`name-${icon}`} className="name">{name}</div>
-    {suffix ? <img key={`suffix-${icon}`} src={asset(suffix)} className="suffix-icon" title={suffixName || ""} /> : null}
+    {suffix
+      ? <img key={`suffix-${icon}`} src={asset(suffix)} className="suffix-icon" title={suffixName || ""} />
+      : null}
   </div>
 );
 
 const Resources = ({ node, job }) => (
   <div className="resource-container">
     <img src={asset(job)} className="skill-icon" />
-    {node.map((item, index) => (<Resource key={`res-${item.icon}-${index}`} name={item.name} icon={item.icon} suffix={item.suffix} suffixName={item.suffixName} />))}
+    {node.map((item, index) => (
+      <Resource key={`res-${item.icon}-${item.id}`} name={item.name} icon={item.icon} suffix={item.suffix} suffixName={item.suffixName} />
+    ))}
   </div>
 );
 
 // a - b: ascending order, b - a: descending order
-const selectedNodes = nodes.map((node) => node).sort((a, b) => nextSpawn(a.times, a.uptime) - nextSpawn(b.times, b.uptime));
+const selectedNodes = nodes.map((node) => node)
+  .sort((a, b) => nextSpawn(a.times, a.uptime) - nextSpawn(b.times, b.uptime));
 // console.log(selectedNodes);
 
 const Cards = () => {
@@ -135,7 +140,7 @@ const Cards = () => {
   useEffect(() => {
     setTrackedNodes((n) => n.sort((a, b) => nextSpawn(a.times, a.uptime) - nextSpawn(b.times, b.uptime)));
     console.log("Updated");
-  }, [updateOnHourChange]);
+  }, [et]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -149,7 +154,7 @@ const Cards = () => {
 
   return (
     <div className="card-container">
-      {trackedNodes.map((node, index) => (<Card key={`card-${index}`} data={node} time={nextSpawn(node.times, node.uptime)} />))}
+      {trackedNodes.map((node) => (<Card key={`card-${node.id}`} data={node} time={et.getTime()} />))}
     </div>
   );
 };
@@ -158,9 +163,8 @@ const Card = ({ data, time }) => {
   const {
     node, job, zone, teleport, pos, times, uptime, id,
   } = data;
-
   const [x, y] = pos;
-  // console.log(`Next: ${nextSpawn(times, uptime)} - ${getTranslation(teleport)}`);
+
   return (
     <div className="card">
 
@@ -181,7 +185,6 @@ const Card = ({ data, time }) => {
 };
 
 export default App;
-
 
 const resources = [
   {
