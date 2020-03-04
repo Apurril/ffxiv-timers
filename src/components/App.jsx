@@ -33,7 +33,8 @@ const formatTime = (date) => {
   return `${hours}:${mins}`;
 };
 
-const eorzeaTimeFactor = 20.571428571428573; // 60 * 24 / 70
+const timeWarp = 50; // speed up time, default: 1
+const eorzeaTimeFactor = 20.571428571428573 * timeWarp; // 60 * 24 / 70
 
 const localToEorzea = (date) => new Date(date.getTime() * eorzeaTimeFactor);
 const eorzeaToLocal = (date) => new Date(date.getTime() / eorzeaTimeFactor);
@@ -64,8 +65,8 @@ const nextSpawn = (spawnTimes, uptime) => {
     }
   }
   const startTime = 0;
-  return nextTime;
-  // return smallestTimeDiff;
+  // return nextTime;
+  return smallestTimeDiff;
 };
 
 const App = () => (
@@ -122,17 +123,19 @@ const Resources = ({ node, job }) => (
 
 // a - b: ascending order, b - a: descending order
 const selectedNodes = nodes.map((node) => node).sort((a, b) => nextSpawn(a.times, a.uptime) - nextSpawn(b.times, b.uptime));
-console.log(selectedNodes);
+// console.log(selectedNodes);
 
 const Cards = () => {
   const [time, setTime] = useState(new Date());
   const [et, setET] = useState(localToEorzea(new Date()));
-  const [timesTillSpawn, setTimesTillSpawn] = useState([]);
+  const [trackedNodes, setTrackedNodes] = useState(nodes.map((node) => node));
 
-  const handleNextSpawn = (value, id) => {
-    setTimesTillSpawn(value); // should be setting an array?
-    // console.log(`id: ${id} - ${value} `);
-  };
+  const updateOnHourChange = et.getHours();
+
+  useEffect(() => {
+    setTrackedNodes((n) => n.sort((a, b) => nextSpawn(a.times, a.uptime) - nextSpawn(b.times, b.uptime)));
+    console.log("Updated");
+  }, [updateOnHourChange]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -146,25 +149,17 @@ const Cards = () => {
 
   return (
     <div className="card-container">
-      {selectedNodes.map((node, index) => (<Card key={`card-${index}`} data={node} time={et.getTime()} onNextSpawnChange={handleNextSpawn} />))}
+      {trackedNodes.map((node, index) => (<Card key={`card-${index}`} data={node} time={nextSpawn(node.times, node.uptime)} />))}
     </div>
   );
 };
 
-const Card = ({ data, time, onNextSpawnChange }) => {
+const Card = ({ data, time }) => {
   const {
     node, job, zone, teleport, pos, times, uptime, id,
   } = data;
 
   const [x, y] = pos;
-
-  useEffect(() => {
-    const handleSpawnChange = (value, cardID) => {
-      onNextSpawnChange(value, cardID);
-    };
-    handleSpawnChange(nextSpawn(times, uptime), id);
-  }, [id, onNextSpawnChange, times, uptime]);
-
   // console.log(`Next: ${nextSpawn(times, uptime)} - ${getTranslation(teleport)}`);
   return (
     <div className="card">
