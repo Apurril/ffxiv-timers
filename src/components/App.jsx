@@ -9,6 +9,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import nodes from "../constants/data";
+import Clock from "./Clock";
+
+import { localToEorzea, getTranslation, formatTimes } from "../utils";
 
 const imageCache = {};
 
@@ -19,24 +22,6 @@ const importAll = (r) => {
 importAll(require.context("../assets/", false, /\.png$/));
 
 const asset = (s) => imageCache[`./${s}.png`].default;
-
-const formatTimes = (times) => times.map((value) => `${value}:00`).join(" & ");
-
-const lang = "en";
-const getTranslation = (object) => object[lang] || object.en;
-
-const formatTime = (date) => {
-  const secs = date.getSeconds().toString().padStart(2, "0");
-  const mins = date.getMinutes().toString().padStart(2, "0");
-  const hours = date.getHours().toString().padStart(2, "0");
-  return `${hours}:${mins}`;
-};
-
-const timeWarp = 10; // speed up time, default: 1
-const eorzeaTimeFactor = 20.571428571428573 * timeWarp; // 60 * 24 / 70
-
-const localToEorzea = (date) => new Date(date.getTime() * eorzeaTimeFactor);
-const eorzeaToLocal = (date) => new Date(date.getTime() / eorzeaTimeFactor);
 
 const timeTillSpawn = (spawnHour) => {
   const eorzeaTime = localToEorzea(new Date());
@@ -80,7 +65,7 @@ const eMinsTillNextSpawn = (spawnTimes, uptime) => {
     }
   }
 
-  if (smallestTimeDiff === Infinity) console.log(`eh: ${eorzeaHour} em: ${eorzeaMin}`);
+  // if (smallestTimeDiff === Infinity) console.log(`eh: ${eorzeaHour} em: ${eorzeaMin}`);
 
   if (smallestTimeDiff > 0) {
     return ((smallestTimeDiff - 1) * 60) + minsTill;
@@ -98,31 +83,6 @@ const App = () => (
     </div>
   </div>
 );
-
-const Clock = () => {
-  const [time, setTime] = useState(new Date());
-  const [et, setET] = useState(localToEorzea(new Date()));
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTime(new Date());
-      setET(localToEorzea(new Date()));
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  });
-
-  return (
-    <div className="clock">
-      <div className="display">
-        <div>{`${formatTime(time)}`}</div>
-        <div className="et-clock">{`${formatTime(et)}`}</div>
-      </div>
-    </div>
-  );
-};
 
 const Resource = ({
   name, icon, suffix, suffixName,
@@ -160,7 +120,7 @@ const Cards = () => {
   useEffect(() => {
     setTrackedNodes((n) => n.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)));
     // console.log("Updated");
-  }, [et]);
+  }, [updateOnHourChange]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
