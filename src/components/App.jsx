@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import nodes from "../constants/data";
 import Clock from "./Clock";
+import ToggleButton from "./ToggleButton";
 
 import { localToEorzea, getTranslation, formatTimes } from "../utils";
 
@@ -75,14 +76,26 @@ const eMinsTillNextSpawn = (spawnTimes, uptime) => {
 
 const App = () => (
   <div className="app">
-    <div className="sidebar">
-      <Clock />
-    </div>
+    <Sidebar />
     <div>
       <Cards />
     </div>
   </div>
 );
+
+const Sidebar = () => {
+  const handleInfoToggle = (value) => {
+    console.log(`v: ${value}`);
+  };
+
+  return (
+    <div className="sidebar">
+      <Clock />
+      <ToggleButton buttonText="test" onToggle={handleInfoToggle} />
+      <ToggleButton buttonText="click me" enabled onToggle={handleInfoToggle} />
+    </div>
+  );
+};
 
 const Resource = ({
   name, icon, suffix, suffixName,
@@ -145,6 +158,8 @@ const Card = ({ data, time }) => {
   } = data;
   const [x, y] = pos;
 
+  const hideInfoContainer = false;
+
   return (
     <div className="card">
 
@@ -155,7 +170,7 @@ const Card = ({ data, time }) => {
 
       <Resources node={node} job={job} />
 
-      <div className="info-container">
+      <div className={`info-container ${hideInfoContainer ? "hide-me" : ""}`}>
         <div className="zone">{`${zone} - (${x}, ${y})`}</div>
         <div className="time">{formatTimes(times)}</div>
       </div>

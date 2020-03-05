@@ -111,6 +111,11 @@
   /* display: none; */
 }
 
+.hide-me {
+  display: none;
+}
+
+
 /* .info-container .teleport {
   font-weight: bold;
   color: rgb(211, 211, 211);
