@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 /* eslint-disable no-console */
-/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
@@ -123,7 +122,7 @@ const Resources = ({ node, job }) => (
     <Icon className="skill-icon" icon={job} />
     {node.map((item) => (
       <Resource
-        key={`res-${item.icon}-${item.id}`}
+        key={`res-${uuid}`}
         name={item.name}
         icon={item.icon}
         suffix={item.suffix}
@@ -163,7 +162,7 @@ const Cards = () => {
 
   return (
     <div className="card-container">
-      {trackedNodes.map((node) => (<Card key={`card-${node.id}`} data={node} time={eMinsTillNextSpawn(node.times, node.uptime)} />))}
+      {trackedNodes.map((node) => (<Card key={`card-${uuid}`} data={node} time={eMinsTillNextSpawn(node.times, node.uptime)} />))}
     </div>
   );
 };
