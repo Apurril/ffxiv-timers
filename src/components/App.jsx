@@ -93,9 +93,9 @@ const Sidebar = () => {
     <div className="sidebar">
       <Clock />
       <ToggleButton onToggle={handleInfoToggle} title="Infobox toggle" />
-      {/* <ToggleButton enabled onToggle={handleInfoToggle} />
+      <ToggleButton enabled onToggle={handleInfoToggle} />
       <ToggleButton onToggle={handleInfoToggle} />
-      <ToggleButton enabled onToggle={handleInfoToggle} /> */}
+      <ToggleButton enabled onToggle={handleInfoToggle} />
     </div>
   );
 };
