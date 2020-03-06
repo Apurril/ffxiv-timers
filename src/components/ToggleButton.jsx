@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import "./ToggleButton.css";
 
 
-const ToggleButton = ({ enabled, onToggle }) => {
+const ToggleButton = ({ enabled, onToggle, title }) => {
   const [toggle, setToggle] = useState(enabled || false);
 
   const handleClick = () => {
@@ -14,7 +14,7 @@ const ToggleButton = ({ enabled, onToggle }) => {
   };
 
   return (
-    <button type="button" className={`toggle-button ${toggle ? "selected" : ""}`} onClick={handleClick}>{`${toggle ? "True" : "False"}`}</button>
+    <button type="button" title={title} className={`toggle-button ${toggle ? "selected" : ""}`} onClick={handleClick}>{`${toggle ? "True" : "False"}`}</button>
   );
 };
 
