@@ -20,7 +20,7 @@ const importAll = (r) => {
   r.keys().forEach((key) => imageCache[key] = r(key));
 };
 
-importAll(require.context("../assets/", false, /\.png$/));
+importAll(require.context("../assets/", false, /\.png$/)); // TODO this seems weird
 
 const asset = (s) => imageCache[`./${s}.png`].default;
 
@@ -91,8 +91,8 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <Clock />
-      <ToggleButton buttonText="test" onToggle={handleInfoToggle} />
-      <ToggleButton buttonText="click me" enabled onToggle={handleInfoToggle} />
+      <ToggleButton onToggle={handleInfoToggle} />
+      <ToggleButton enabled onToggle={handleInfoToggle} />
     </div>
   );
 };

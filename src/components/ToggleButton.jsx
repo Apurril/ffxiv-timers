@@ -2,8 +2,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from "react";
+import "./ToggleButton.css";
 
-const ToggleButton = ({ buttonText, enabled, onToggle }) => {
+
+const ToggleButton = ({ enabled, onToggle }) => {
   const [toggle, setToggle] = useState(enabled || false);
 
   const handleClick = () => {
@@ -12,7 +14,7 @@ const ToggleButton = ({ buttonText, enabled, onToggle }) => {
   };
 
   return (
-    <button type="button" className="ToggleButton" onClick={handleClick}>{`${buttonText}: ${toggle ? "True" : "False"}`}</button>
+    <button type="button" className={`toggle-button ${toggle ? "selected" : ""}`} onClick={handleClick}>{`${toggle ? "True" : "False"}`}</button>
   );
 };
 
