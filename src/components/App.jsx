@@ -7,6 +7,7 @@
 /* eslint-disable no-return-assign */
 
 import React, { useState, useEffect } from "react";
+import { v1 as uuid } from "uuid";
 import "./App.css";
 import nodes from "../constants/data";
 import Clock from "./Clock";
@@ -99,23 +100,36 @@ const Sidebar = () => {
   );
 };
 
+const Icon = ({ icon, name = "", className = "" }) => <img key={`Icon-${uuid}`} src={asset(icon)} className={className} alt={name} title={name} />;
+
 const Resource = ({
-  name, icon, suffix, suffixName,
+  name, icon, suffix, suffixName, scrip,
 }) => (
   <div className="resource">
-    <img key={`icon-${icon}`} src={asset(icon)} className="icon" alt={name} />
-    <div key={`name-${icon}`} className="name">{name}</div>
+    {/* <img key={uuid} src={asset(icon)} className="icon" alt={name} /> */}
+    <Icon className="icon" icon={icon} name={name} />
+    <div key={uuid} className="name">{name}</div>
     {suffix
-      ? <img key={`suffix-${icon}`} src={asset(suffix)} className="suffix-icon" title={suffixName || ""} />
+      ? <Icon className="suffix-icon" icon={suffix} name={suffixName} />
+      : null}
+    {scrip
+      ? <Icon className="suffix-icon" icon={scrip} />
       : null}
   </div>
 );
 
 const Resources = ({ node, job }) => (
   <div className="resource-container">
-    <img src={asset(job)} className="skill-icon" />
-    {node.map((item, index) => (
-      <Resource key={`res-${item.icon}-${item.id}`} name={item.name} icon={item.icon} suffix={item.suffix} suffixName={item.suffixName} />
+    <Icon className="skill-icon" icon={job} />
+    {node.map((item) => (
+      <Resource
+        key={`res-${item.icon}-${item.id}`}
+        name={item.name}
+        icon={item.icon}
+        suffix={item.suffix}
+        suffixName={item.suffixName}
+        scrip={item.scrip}
+      />
     ))}
   </div>
 );

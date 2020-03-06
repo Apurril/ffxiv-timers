@@ -73,7 +73,7 @@ const nodes = [
       {
         name: "Prismstone",
         icon: "21232",
-        suffix: scrips.white,
+        scrip: scrips.white,
       },
     ],
     job: jobs.mining,
