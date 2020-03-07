@@ -10,7 +10,7 @@ const ToggleButton = ({ enabled, onToggle, title }) => {
 
   const handleClick = () => {
     setToggle(!toggle);
-    onToggle(!toggle);
+    onToggle();
   };
 
   return (

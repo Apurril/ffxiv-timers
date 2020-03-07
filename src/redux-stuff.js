@@ -1,3 +1,6 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 
 import {
@@ -19,13 +22,30 @@ const cardsSlice = createSlice({
   },
 });
 
+const uiInitialState = {
+  infobox: true,
+};
+
+const uiSlice = createSlice({
+  name: "ui",
+  initialState: uiInitialState,
+  reducers: {
+    toggleInfobox: (state) => {
+      state.infobox = !state.infobox;
+    },
+  },
+});
+
 export const {
   filterJob,
   sort: sortNodes,
 } = cardsSlice.actions;
 
+export const { toggleInfobox } = uiSlice.actions;
+
 const reducer = combineReducers({
   cards: cardsSlice.reducer,
+  ui: uiSlice.reducer,
 });
 
 const middleware = [...getDefaultMiddleware(), logger];

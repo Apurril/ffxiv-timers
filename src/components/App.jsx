@@ -9,7 +9,7 @@ import "./App.css";
 import Clock from "./Clock";
 import ToggleButton from "./ToggleButton";
 
-import { filterJob, sortNodes } from "../redux-stuff";
+import { filterJob, sortNodes, toggleInfobox } from "../redux-stuff";
 
 import {
   localToEorzea, getTranslation, formatTimes, importAll, asset, eMinsTillNextSpawn,
@@ -29,8 +29,11 @@ const App = () => {
 };
 
 const Sidebar = () => {
-  const handleInfoToggle = (value) => {
-    console.log(`v: ${value}`);
+  const dispatch = useDispatch();
+  const infoboxEnabled = useSelector((state) => state.ui.infobox);
+  const handleInfoToggle = () => {
+    dispatch(toggleInfobox());
+    console.log(infoboxEnabled);
   };
 
   return (
@@ -97,7 +100,7 @@ const Cards = () => {
   };
 
   useEffect(() => {
-    handleNodeSorting();
+    // handleNodeSorting();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateOnHourChange]);
 
@@ -124,7 +127,7 @@ const Card = ({ data, time }) => {
   } = data;
   const [x, y] = pos;
 
-  const hideInfoContainer = false;
+  const infoboxEnabled = useSelector((state) => state.ui.infobox);
 
   return (
     <div className="card">
@@ -136,7 +139,7 @@ const Card = ({ data, time }) => {
 
       <Resources node={node} job={job} />
 
-      <div className={`info-container ${hideInfoContainer ? "hide-me" : ""}`}>
+      <div className={`info-container ${infoboxEnabled ? "" : "hide-me"}`}>
         <div className="zone">{`${zone}`}</div>
         <Icon className="skill-icon" icon={job} />
         <div className="coords">{`(${x}, ${y})`}</div>
