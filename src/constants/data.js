@@ -1,3 +1,5 @@
+import { v1 as uuid } from "uuid";
+
 /* eslint-disable no-unused-vars */
 const jobs = {
   botany: "btn",
@@ -62,9 +64,9 @@ const nodeType = {
   legendary: "Legendary",
 };
 
-const nodes = [
+const nodeData = [
   {
-    id: 0,
+    id: uuid(),
     node: [
       {
         name: "Beryllium Ore",
@@ -87,7 +89,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 1,
+    id: uuid(),
     node: [
       // {
       //   name: "Shade Quartz",
@@ -114,7 +116,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 2,
+    id: uuid(),
     node: [
       {
         name: "Raw Onyx",
@@ -131,7 +133,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 3,
+    id: uuid(),
     node: [
       {
         name: "Broad Beans",
@@ -148,7 +150,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 4,
+    id: uuid(),
     node: [
       {
         name: "Duskblooms",
@@ -164,7 +166,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 5,
+    id: uuid(),
     node: [
       {
         name: "SandalWood Log",
@@ -185,7 +187,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 6,
+    id: uuid(),
     node: [
       {
         name: "Ethereal Cocoon",
@@ -202,7 +204,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 7,
+    id: uuid(),
     node: [
       {
         name: "Purpure Shell Chip",
@@ -218,7 +220,7 @@ const nodes = [
     patch: 5.0,
   },
   {
-    id: 8,
+    id: uuid(),
     node: [
       {
         name: "Ashen Alumen",
@@ -235,4 +237,4 @@ const nodes = [
   },
 ];
 
-export default nodes;
+export default nodeData;
