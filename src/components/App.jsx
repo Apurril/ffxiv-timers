@@ -108,7 +108,7 @@ const Cards = () => {
   const [time, setTime] = useState(new Date());
   const [et, setET] = useState(localToEorzea(new Date()));
   // const [trackedNodes, setTrackedNodes] = useState(nodes.filter((node) => node.job === "min"));
-  const trackedNodes = useSelector((state) => state.nodes);
+  const cards = useSelector((state) => state.cards);
   // const [trackedNodes, setTrackedNodes] = useState(nodes.map((node) => node));
 
   const updateOnHourChange = et.getHours();
@@ -141,7 +141,7 @@ const Cards = () => {
 
   return (
     <div className="card-container">
-      {trackedNodes.map((node) => (<Card key={`card-${uuid()}`} data={node} time={eMinsTillNextSpawn(node.times, node.uptime)} />))}
+      {cards.map((node) => (<Card key={`card-${uuid()}`} data={node} time={eMinsTillNextSpawn(node.times, node.uptime)} />))}
     </div>
   );
 };

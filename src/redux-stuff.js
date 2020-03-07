@@ -8,8 +8,8 @@ import { eMinsTillNextSpawn } from "./utils";
 
 const nodesInitialState = nodeData.map((node) => node);
 
-const nodesSlice = createSlice({
-  name: "nodes",
+const cardsSlice = createSlice({
+  name: "cards",
   initialState: nodesInitialState,
   reducers: {
     filterJob: (state, { payload }) => state.filter((node) => node.job === payload),
@@ -21,10 +21,10 @@ const nodesSlice = createSlice({
 export const {
   filterJob,
   sort: sortNodes,
-} = nodesSlice.actions;
+} = cardsSlice.actions;
 
 const reducer = combineReducers({
-  nodes: nodesSlice.reducer,
+  cards: cardsSlice.reducer,
 });
 
 const middleware = [...getDefaultMiddleware(), logger];
