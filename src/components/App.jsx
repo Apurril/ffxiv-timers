@@ -1,15 +1,11 @@
-/* eslint-disable max-len */
-/* eslint-disable no-console */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-return-assign */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-console */
 
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { v1 as uuid } from "uuid";
 import "./App.css";
-import nodeData from "../constants/data";
 import Clock from "./Clock";
 import ToggleButton from "./ToggleButton";
 
@@ -19,20 +15,6 @@ import {
   localToEorzea, getTranslation, formatTimes, importAll, asset, eMinsTillNextSpawn,
 } from "../utils";
 import ImageButton from "./ImageButton";
-
-const timeTillSpawn = (spawnHour) => {
-  const eorzeaTime = localToEorzea(new Date());
-  const eorzeaHour = eorzeaTime.getHours();
-
-  // hours = (time1 - time2 + 24) % 24;
-
-  // if (spawnHour >= eorzeaHour + 2) {
-  //   console.log(`sh: ${spawnHour} eh: ${eorzeaHour}`);
-  //   return 0;
-  // }
-
-  return (spawnHour - eorzeaHour + 24) % 24;
-};
 
 const App = () => {
   importAll(require.context("../assets/", false, /\.png$/)); // TODO this seems weird
@@ -98,18 +80,11 @@ const Resources = ({ node, job }) => (
   </div>
 );
 
-// a - b: ascending order, b - a: descending order
-const selectedNodes = nodeData.map((node) => node)
-  .sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime));
-// console.log(selectedNodes);
-
 const Cards = () => {
   const dispatch = useDispatch();
   const [time, setTime] = useState(new Date());
   const [et, setET] = useState(localToEorzea(new Date()));
-  // const [trackedNodes, setTrackedNodes] = useState(nodes.filter((node) => node.job === "min"));
   const cards = useSelector((state) => state.cards);
-  // const [trackedNodes, setTrackedNodes] = useState(nodes.map((node) => node));
 
   const updateOnHourChange = et.getHours();
 
@@ -122,9 +97,6 @@ const Cards = () => {
   };
 
   useEffect(() => {
-    // setTrackedNodes((n) => n.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)));
-    // TODO this now needs to dispatch an action
-    handleFilter();
     handleNodeSorting();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateOnHourChange]);
