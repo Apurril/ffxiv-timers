@@ -100,7 +100,7 @@ const Cards = () => {
   };
 
   useEffect(() => {
-    // handleNodeSorting();
+    handleNodeSorting();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateOnHourChange]);
 
