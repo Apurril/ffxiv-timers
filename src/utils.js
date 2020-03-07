@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
 
 const lang = "en";
@@ -26,3 +27,39 @@ export const importAll = (r) => {
 };
 
 export const asset = (s) => imageCache[`./${s}.png`].default;
+
+export const eMinsTillNextSpawn = (spawnTimes, uptime) => {
+  const eorzeaTime = localToEorzea(new Date());
+  const eorzeaHour = 16; // eorzeaTime.getHours(); // here
+  const eorzeaMin = 1; // eorzeaTime.getMinutes();
+  const minsTill = 60 - eorzeaMin;
+
+  let smallestTimeDiff = Infinity;
+  let nextTime;
+
+  for (const spawnTime of spawnTimes) {
+    // if (eorzeaHour === spawnTime) {
+    //   return 24 * 60 - eorzeaMin;
+    // }
+    let timeDiff = Infinity;
+    if (eorzeaHour < spawnTime) {
+      timeDiff = spawnTime - eorzeaHour;
+    }
+
+    if (eorzeaHour > spawnTime) {
+      timeDiff = 24 - eorzeaHour + spawnTime;
+    }
+
+    if (timeDiff < smallestTimeDiff) {
+      smallestTimeDiff = timeDiff;
+      nextTime = spawnTime;
+    }
+  }
+
+  // if (smallestTimeDiff === Infinity) console.log(`eh: ${eorzeaHour} em: ${eorzeaMin}`);
+
+  if (smallestTimeDiff > 0) {
+    return ((smallestTimeDiff - 1) * 60) + minsTill;
+  }
+  return minsTill;
+};

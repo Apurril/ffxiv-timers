@@ -6,14 +6,17 @@
 /* eslint-disable no-return-assign */
 
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { v1 as uuid } from "uuid";
 import "./App.css";
-import nodes from "../constants/data";
+import nodeData from "../constants/data";
 import Clock from "./Clock";
 import ToggleButton from "./ToggleButton";
 
+import { filterJob, sortNodes } from "../redux-stuff";
+
 import {
-  localToEorzea, getTranslation, formatTimes, importAll, asset,
+  localToEorzea, getTranslation, formatTimes, importAll, asset, eMinsTillNextSpawn,
 } from "../utils";
 import ImageButton from "./ImageButton";
 
@@ -29,42 +32,6 @@ const timeTillSpawn = (spawnHour) => {
   // }
 
   return (spawnHour - eorzeaHour + 24) % 24;
-};
-
-const eMinsTillNextSpawn = (spawnTimes, uptime) => {
-  const eorzeaTime = localToEorzea(new Date());
-  const eorzeaHour = 16; // eorzeaTime.getHours(); // here
-  const eorzeaMin = 1; // eorzeaTime.getMinutes();
-  const minsTill = 60 - eorzeaMin;
-
-  let smallestTimeDiff = Infinity;
-  let nextTime;
-
-  for (const spawnTime of spawnTimes) {
-    // if (eorzeaHour === spawnTime) {
-    //   return 24 * 60 - eorzeaMin;
-    // }
-    let timeDiff = Infinity;
-    if (eorzeaHour < spawnTime) {
-      timeDiff = spawnTime - eorzeaHour;
-    }
-
-    if (eorzeaHour > spawnTime) {
-      timeDiff = 24 - eorzeaHour + spawnTime;
-    }
-
-    if (timeDiff < smallestTimeDiff) {
-      smallestTimeDiff = timeDiff;
-      nextTime = spawnTime;
-    }
-  }
-
-  // if (smallestTimeDiff === Infinity) console.log(`eh: ${eorzeaHour} em: ${eorzeaMin}`);
-
-  if (smallestTimeDiff > 0) {
-    return ((smallestTimeDiff - 1) * 60) + minsTill;
-  }
-  return minsTill;
 };
 
 const App = () => {
@@ -132,20 +99,34 @@ const Resources = ({ node, job }) => (
 );
 
 // a - b: ascending order, b - a: descending order
-const selectedNodes = nodes.map((node) => node)
+const selectedNodes = nodeData.map((node) => node)
   .sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime));
 // console.log(selectedNodes);
 
 const Cards = () => {
+  const dispatch = useDispatch();
   const [time, setTime] = useState(new Date());
   const [et, setET] = useState(localToEorzea(new Date()));
-  const [trackedNodes, setTrackedNodes] = useState(nodes.map((node) => node));
+  // const [trackedNodes, setTrackedNodes] = useState(nodes.filter((node) => node.job === "min"));
+  const trackedNodes = useSelector((state) => state.nodes);
+  // const [trackedNodes, setTrackedNodes] = useState(nodes.map((node) => node));
 
   const updateOnHourChange = et.getHours();
 
+  const handleNodeSorting = () => {
+    dispatch(sortNodes());
+  };
+
+  const handleFilter = () => {
+    dispatch(filterJob("min"));
+  };
+
   useEffect(() => {
-    setTrackedNodes((n) => n.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)));
-    // console.log("Updated");
+    // setTrackedNodes((n) => n.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)));
+    // TODO this now needs to dispatch an action
+    handleFilter();
+    handleNodeSorting();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateOnHourChange]);
 
   useEffect(() => {
