@@ -1,0 +1,36 @@
+.image-button {
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  background-color: rgb(49, 49, 49);
+  /* border-radius: 25px; */
+
+  cursor: pointer;
+  margin: 4px;
+
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 0px 6px 0 rgb(0, 0, 0, 0.85);
+  -webkit-user-select: none;
+
+  border-radius: 5px;
+  box-sizing: border-box;
+
+}
+
+.image-button.selected {
+  /* background-color: rgb(31, 31, 31); */
+  /* background-color: rgba(255, 255, 255, 0.85); */
+  color: rgb(17, 17, 17);
+  box-shadow: 0 0px 6px 0 rgb(0, 0, 0, 0.85);
+  border: solid rgba(110, 238, 247, 0.85) 1px;
+   box-sizing: border-box;
+}
+
+.image-button .img {
+  height: 25px;
+}

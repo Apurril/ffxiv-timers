@@ -17,3 +17,12 @@ export const formatTime = (date) => {
   const hours = date.getHours().toString().padStart(2, "0");
   return `${hours}:${mins}`;
 };
+
+const imageCache = {};
+
+export const importAll = (r) => {
+  // eslint-disable-next-line no-return-assign
+  r.keys().forEach((key) => imageCache[key] = r(key));
+};
+
+export const asset = (s) => imageCache[`./${s}.png`].default;

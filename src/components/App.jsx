@@ -12,17 +12,10 @@ import nodes from "../constants/data";
 import Clock from "./Clock";
 import ToggleButton from "./ToggleButton";
 
-import { localToEorzea, getTranslation, formatTimes } from "../utils";
-
-const imageCache = {};
-
-const importAll = (r) => {
-  r.keys().forEach((key) => imageCache[key] = r(key));
-};
-
-importAll(require.context("../assets/", false, /\.png$/)); // TODO this seems weird
-
-const asset = (s) => imageCache[`./${s}.png`].default;
+import {
+  localToEorzea, getTranslation, formatTimes, importAll, asset,
+} from "../utils";
+import ImageButton from "./ImageButton";
 
 const timeTillSpawn = (spawnHour) => {
   const eorzeaTime = localToEorzea(new Date());
@@ -74,14 +67,17 @@ const eMinsTillNextSpawn = (spawnTimes, uptime) => {
   return minsTill;
 };
 
-const App = () => (
-  <div className="app">
-    <Sidebar />
-    <div>
-      <Cards />
+const App = () => {
+  importAll(require.context("../assets/", false, /\.png$/)); // TODO this seems weird
+  return (
+    <div className="app">
+      <Sidebar />
+      <div>
+        <Cards />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Sidebar = () => {
   const handleInfoToggle = (value) => {
@@ -95,11 +91,13 @@ const Sidebar = () => {
       <ToggleButton enabled onToggle={handleInfoToggle} />
       <ToggleButton onToggle={handleInfoToggle} />
       <ToggleButton enabled onToggle={handleInfoToggle} />
+      <ImageButton />
+      <ImageButton />
     </div>
   );
 };
 
-const Icon = ({ icon, name = "", className = "" }) => <img key={`Icon-${uuid}`} src={asset(icon)} className={className} alt={name} title={name} />;
+const Icon = ({ icon, name = "", className = "" }) => <img key={`Icon-${uuid()}`} src={asset(icon)} className={className} alt={name} title={name} />;
 
 const Resource = ({
   name, icon, suffix, suffixName, scrip,
@@ -107,7 +105,7 @@ const Resource = ({
   <div className="resource">
     {/* <img key={uuid} src={asset(icon)} className="icon" alt={name} /> */}
     <Icon className="icon" icon={icon} name={name} />
-    <div key={uuid} className="name">{name}</div>
+    <div key={uuid()} className="name">{name}</div>
     {suffix
       ? <Icon className="suffix-icon" icon={suffix} name={suffixName} />
       : null}
@@ -119,10 +117,10 @@ const Resource = ({
 
 const Resources = ({ node, job }) => (
   <div className="resource-container">
-    <Icon className="skill-icon" icon={job} />
+    {/* <Icon className="skill-icon" icon={job} /> */}
     {node.map((item) => (
       <Resource
-        key={`res-${uuid}`}
+        key={`res-${uuid()}`}
         name={item.name}
         icon={item.icon}
         suffix={item.suffix}
@@ -162,7 +160,7 @@ const Cards = () => {
 
   return (
     <div className="card-container">
-      {trackedNodes.map((node) => (<Card key={`card-${uuid}`} data={node} time={eMinsTillNextSpawn(node.times, node.uptime)} />))}
+      {trackedNodes.map((node) => (<Card key={`card-${uuid()}`} data={node} time={eMinsTillNextSpawn(node.times, node.uptime)} />))}
     </div>
   );
 };
@@ -186,7 +184,9 @@ const Card = ({ data, time }) => {
       <Resources node={node} job={job} />
 
       <div className={`info-container ${hideInfoContainer ? "hide-me" : ""}`}>
-        <div className="zone">{`${zone} - (${x}, ${y})`}</div>
+        <div className="zone">{`${zone}`}</div>
+        <Icon className="skill-icon" icon={job} />
+        <div className="coords">{`(${x}, ${y})`}</div>
         <div className="time">{formatTimes(times)}</div>
       </div>
 

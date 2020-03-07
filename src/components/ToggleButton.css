@@ -1,10 +1,11 @@
 .toggle-button {
   width: 50px;
+  /* height: 25px; */
   line-height: 2em;
 
   border: none;
   color: rgb(184, 184, 184);
-  background-color: rgb(60, 60, 60);
+  background-color: rgb(49, 49, 49);
   border-radius: 25px;
 
   cursor: pointer;
