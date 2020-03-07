@@ -38,10 +38,12 @@ export const eMinsTillNextSpawn = (spawnTimes, uptime) => {
   let nextTime;
 
   for (const spawnTime of spawnTimes) {
-    // if (eorzeaHour === spawnTime) {
-    //   return 24 * 60 - eorzeaMin;
-    // }
     let timeDiff = Infinity;
+
+    if (eorzeaHour === spawnTime && spawnTimes.length === 1) {
+      return 24 * 60 - eorzeaMin;
+    }
+
     if (eorzeaHour < spawnTime) {
       timeDiff = spawnTime - eorzeaHour;
     }
