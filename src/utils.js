@@ -5,6 +5,8 @@ const timeWarp = 10; // speed up time, default: 1
 const eorzeaTimeFactor = 20.571428571428573 * timeWarp; // 60 * 24 / 70
 
 export const localToEorzea = (date) => new Date(date.getTime() * eorzeaTimeFactor);
+// new Date(date.getTime() * eorzeaTimeFactor + (date.getTimezoneOffset() - 60) * 60 * 1000);
+
 export const eorzeaToLocal = (date) => new Date(date.getTime() / eorzeaTimeFactor);
 
 export const formatTimes = (times) => times.map((value) => `${value}:00`).join(" & ");
