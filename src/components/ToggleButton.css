@@ -17,12 +17,10 @@
   align-self: center;
 
   /* margin-top: auto; need to put this in a parent flex container */
-  box-shadow: 0 0px 6px 0 rgb(0, 0, 0, 0.85);
+  box-shadow: 0 0px 4px 0 rgb(0, 0, 0, 0.85);
 }
 
 .toggle-button.selected {
-  /* background-color: rgb(190, 78, 156); */
-  background-color: rgba(110, 238, 247, 0.85);
-  color: rgb(17, 17, 17);
-  box-shadow: 0 0px 6px 0 rgba(110, 238, 247, 0.85);
+  background-color: rgb(16, 122, 183);
+  color: rgb(255, 255, 255);
 }
