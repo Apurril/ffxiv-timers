@@ -16,7 +16,7 @@ const cardsSlice = createSlice({
   name: "cards",
   initialState: nodesInitialState,
   reducers: {
-    filterJob: (state, { payload }) => state.filter((node) => node.job === payload),
+    filterJob: (state, { payload }) => state.filter((node) => node.job === payload), // TODO store which filters are active and fix this
 
     sort: (state) => state.sort((a, b) => eMinsTillNextSpawn(a.times, a.uptime) - eMinsTillNextSpawn(b.times, b.uptime)),
   },
