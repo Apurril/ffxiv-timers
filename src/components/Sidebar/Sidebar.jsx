@@ -17,6 +17,9 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
+      <div className="titleBar">
+        <span>Timers</span>
+      </div>
       <Clock />
       <ToggleButton onToggle={handleInfoToggle} title="Infobox toggle" />
       <ToggleButton enabled onToggle={handleInfoToggle} />
