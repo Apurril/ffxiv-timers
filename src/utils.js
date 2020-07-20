@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 const lang = "en";
-const timeWarp = 10; // speed up time, default: 1
+const timeWarp = 1; // speed up time, default: 1
 const eorzeaTimeFactor = 20.571428571428573 * timeWarp; // 60 * 24 / 70
 
 export const localToEorzea = (date) => new Date(date.getTime() * eorzeaTimeFactor);

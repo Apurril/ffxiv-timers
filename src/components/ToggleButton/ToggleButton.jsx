@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import "./ToggleButton.css";
 
-
 const ToggleButton = ({ enabled, onToggle, title }) => {
   const [toggle, setToggle] = useState(enabled || false);
 

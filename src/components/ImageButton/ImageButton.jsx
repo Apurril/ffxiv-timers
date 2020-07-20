@@ -8,8 +8,7 @@
 /* eslint-disable no-console */
 import React, { useState } from "react";
 import "./ImageButton.css";
-import { asset } from "../utils";
-
+import { asset } from "../../utils";
 
 const ImageButton = ({ enabled, title }) => {
   const [toggle, setToggle] = useState(enabled || false);
